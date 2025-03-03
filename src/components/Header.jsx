@@ -1,7 +1,18 @@
+import { useNavigate } from "react-router-dom";
+
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <header>
-      <p>header</p>
+      <div>
+        <button
+          onClick={() => {
+            navigate("/products");
+          }}
+        >
+          Products
+        </button>
+      </div>
     </header>
   );
 };
