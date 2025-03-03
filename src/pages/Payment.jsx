@@ -1,5 +1,7 @@
-const Payment = () => {
-  return <div>Payment page</div>;
+import { Navigate } from "react-router-dom";
+
+const Payment = ({ token }) => {
+  return token ? <div>Cart page</div> : <Navigate to="/login" />;
 };
 
 export default Payment;
