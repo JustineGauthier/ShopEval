@@ -1,21 +1,16 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+// import axios from "axios";
+// import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCartContext } from "../contexts/CartContext";
+import useProductsQuery from "../hooks/useProductsQuery";
 
 const Products = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const { cart, dispatch } = useCartContext();
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get("http://localhost:4000/products");
-      setData(response.data);
-      setIsLoading(false);
-    };
-    fetchData();
-  }, []);
+
+  const { data, isLoading, error } = useProductsQuery();
+  if (isLoading) return <p>Loading ...</p>;
+  if (error) return <p>{error.message}</p>;
 
   const handleAddItem = (product) => {
     const itemInCart = cart.find((item) => item._id === product._id);
