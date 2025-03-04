@@ -8,7 +8,6 @@ const Products = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { cart, dispatch } = useCartContext();
-  console.log("products ", cart);
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get("http://localhost:4000/products");

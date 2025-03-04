@@ -24,8 +24,6 @@ const Login = ({ setToken }) => {
         "http://localhost:4000/user/login",
         data
       );
-      console.log(response);
-
       if (response.data.token) {
         Cookies.set("token", response.data.token);
         setToken(response.data.token);
