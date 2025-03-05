@@ -1,7 +1,9 @@
 const Footer = () => {
   return (
     <footer>
-      <p>footer</p>
+      <small>
+        Shop.js V2 par Justine Gauthier, évaluation de l'école Le Reacteur
+      </small>
     </footer>
   );
 };

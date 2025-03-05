@@ -17,7 +17,7 @@ const Header = ({ token, isAdmin, setUser }) => {
       <div>
         <button onClick={() => navigate("/")}>Accueil</button>
         <button onClick={() => navigate("/products")}>Products</button>
-
+        <button onClick={() => navigate("/cart")}>Panier ({cartNum})</button>
         {token ? (
           <>
             {isAdmin ? (
@@ -27,9 +27,6 @@ const Header = ({ token, isAdmin, setUser }) => {
             ) : (
               <></>
             )}
-            <button onClick={() => navigate("/cart")}>
-              Panier ({cartNum})
-            </button>
             <button onClick={() => navigate("/payment")}>Paiement</button>
             <button
               onClick={() => {

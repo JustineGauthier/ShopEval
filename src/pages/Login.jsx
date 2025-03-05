@@ -44,7 +44,6 @@ const Login = ({ setUser }) => {
 
   return (
     <div>
-      <h2>Se connecter</h2>
       <form onSubmit={handleSubmit}>
         <input type="email" name="email" placeholder="Email" required />
         <input

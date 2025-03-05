@@ -1,12 +1,12 @@
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useCartContext } from "../contexts/CartContext";
 import ProductManagement from "../components/ProductManagement";
 
-const Cart = ({ token }) => {
+const Cart = () => {
   const { cart, totalPrice } = useCartContext();
   const navigate = useNavigate();
 
-  return token ? (
+  return (
     <>
       {cart.length > 0 ? (
         <div>
@@ -42,8 +42,6 @@ const Cart = ({ token }) => {
         <p>Votre panier est vide ! (A bas le consumérisme !)</p>
       )}
     </>
-  ) : (
-    <Navigate to="/login" />
   );
 };
 
