@@ -1,49 +1,26 @@
 import { Navigate } from "react-router-dom";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import useOrdersQuery from "../hooks/useOrdersQuery";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Admin = ({ token, isAdmin }) => {
-  const [orders, setOrders] = useState([]);
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const { data, isLoading, error } = useOrdersQuery(token);
+  const queryClient = useQueryClient();
   const [selectedOrderId, setSelectedOrderId] = useState("");
+  const delivredOrders =
+    data?.filter((order) => order.delivered === true) || [];
+  const notDelivredOrders =
+    data?.filter((order) => order.delivered === false) || [];
 
-  const delivredOrders = orders.filter((order) => order.delivered === true);
-  const notDelivredOrders = orders.filter((order) => order.delivered === false);
-
-  useEffect(() => {
-    const fetchOrders = async () => {
-      if (!isAdmin) return;
-
-      try {
-        setIsLoading(true);
-        const response = await axios.get("http://localhost:4000/orders", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (response.status === 200) {
-          setOrders(response.data);
-          setIsLoading(false);
-        }
-      } catch (error) {
-        setError(
-          error.response?.data?.error ||
-            "Une erreur est survenue lors du chargement des commandes"
-        );
-        setIsLoading(false);
-      }
-    };
-
-    fetchOrders();
-  }, [isAdmin, token]);
+  if (isLoading)
+    return <p>Une erreur est survenue lors du chargement des commandes.</p>;
+  if (error) return <p>{error.message}</p>;
 
   const handleMarkDelivered = async () => {
     if (!selectedOrderId) return;
 
     try {
-      setIsLoading(true);
       const response = await axios.put(
         `http://localhost:4000/orders/mark-delivered/${selectedOrderId}`,
         {},
@@ -55,16 +32,14 @@ const Admin = ({ token, isAdmin }) => {
       );
 
       if (response.status === 200) {
-        setOrders(orders.filter((order) => order._id !== selectedOrderId));
-        setIsLoading(false);
+        queryClient.invalidateQueries(["orders"]);
         setSelectedOrderId("");
       }
     } catch (error) {
-      setError(
+      console.error(
         error.response?.data?.error ||
           "Une erreur est survenue lors de la mise à jour de la commande"
       );
-      setIsLoading(false);
     }
   };
 
@@ -118,7 +93,7 @@ const Admin = ({ token, isAdmin }) => {
       ) : (
         <p>Pas de commandes livrées !</p>
       )}
-      {error && <p className="text-red-500">{error}</p>}
+      {error && <p className="text-red-500">{error.message}</p>}
     </div>
   );
 };
