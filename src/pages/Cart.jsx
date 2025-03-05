@@ -15,13 +15,16 @@ const Cart = ({ token }) => {
 
             return (
               <div key={product._id}>
-                <h2
+                <div
                   onClick={() => {
                     navigate(`/products/${id}`, { state: { id } });
                   }}
                 >
-                  {product.title}
-                </h2>
+                  <img src={product.thumbnail} alt={product.title} />
+                  <h2>
+                    {product.title} - {product.price}€
+                  </h2>
+                </div>
                 <ProductManagement product={product}></ProductManagement>
               </div>
             );

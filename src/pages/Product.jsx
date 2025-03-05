@@ -14,6 +14,9 @@ const Product = () => {
   return (
     <div>
       <h1>{product.title}</h1>
+      <img src={product.thumbnail} alt={product.title} />
+      <p>Description : {product.description}</p>
+      <h2>Prix : {product.price}€</h2>
       <ProductManagement product={product}></ProductManagement>
     </div>
   );
