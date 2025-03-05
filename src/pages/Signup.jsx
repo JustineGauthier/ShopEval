@@ -1,9 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { Link, useNavigate } from "react-router-dom";
 
-const Signup = ({ setToken }) => {
+const Signup = ({ setUser }) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -26,8 +25,7 @@ const Signup = ({ setToken }) => {
         data
       );
       if (response.data.token) {
-        Cookies.set("token", response.data.token);
-        setToken(response.data.token);
+        setUser({ token: response.data.token, isAdmin: response.data.admin });
         setIsLoading(false);
         navigate("/");
       } else {

@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import { useCartContext } from "../contexts/CartContext";
 import { useEffect, useState } from "react";
 
-const Header = ({ token, setToken }) => {
+const Header = ({ token, isAdmin, setUser }) => {
   const navigate = useNavigate();
   const { totalItems } = useCartContext();
   const [cartNum, setCartNum] = useState(0);
@@ -20,13 +20,20 @@ const Header = ({ token, setToken }) => {
 
         {token ? (
           <>
+            {isAdmin ? (
+              <>
+                <button onClick={() => navigate("/admin")}>Commandes</button>
+              </>
+            ) : (
+              <></>
+            )}
             <button onClick={() => navigate("/cart")}>
               Panier ({cartNum})
             </button>
             <button onClick={() => navigate("/payment")}>Paiement</button>
             <button
               onClick={() => {
-                setToken(null), Cookies.remove("token");
+                setUser(null), Cookies.remove("token");
                 navigate("/login");
               }}
             >
