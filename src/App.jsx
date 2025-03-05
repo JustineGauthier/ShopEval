@@ -4,6 +4,7 @@
 import "./App.css";
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Cookies from "js-cookie";
 
 import Header from "./components/Header";
 import Home from "./pages/Home";
@@ -17,16 +18,23 @@ import Admin from "./pages/Admin";
 import Footer from "./components/Footer";
 
 function App() {
-  const [token, setToken] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(null);
+  const [token, setToken] = useState(Cookies.get("token") || null);
+  const [isAdmin, setIsAdmin] = useState(Cookies.get("isAdmin") || null);
 
   const setUser = (user) => {
     if (user) {
+      const timeBeforeExpiration = new Date(
+        new Date().getTime() + 15 * 60 * 1000
+      );
       setToken(user.token);
+      Cookies.set("token", token, { expires: timeBeforeExpiration });
       setIsAdmin(user.isAdmin);
+      Cookies.set("isAdmin", isAdmin, { expires: timeBeforeExpiration });
     } else {
       setToken(null);
+      Cookies.remove("token");
       setIsAdmin(null);
+      Cookies.remove("isAdmin");
     }
   };
 
