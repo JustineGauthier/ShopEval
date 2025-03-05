@@ -1,26 +1,20 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import useProductsQuery from "../hooks/useProductsQuery";
+import ProductManagement from "../components/ProductManagement";
 
 const Product = () => {
   const { id } = useParams();
-  const [product, setProduct] = useState(null);
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      const response = await axios.get(`http://localhost:4000/products/${id}`);
-      setProduct(response.data);
-    };
-    fetchProduct();
-  }, [id]);
+  const { data, isLoading, error } = useProductsQuery();
+  if (isLoading) return <p>En cours de chargement ...</p>;
+  if (error) return <p>{error.message}</p>;
 
-  if (!product) {
-    return <div>En cours de chargement...</div>;
-  }
+  const product = data.find((item) => item._id === id);
 
   return (
     <div>
-      <h2>{product.title}</h2>
+      <h1>{product.title}</h1>
+      <ProductManagement product={product}></ProductManagement>
     </div>
   );
 };
