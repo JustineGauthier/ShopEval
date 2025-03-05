@@ -8,6 +8,9 @@ const Admin = ({ token, isAdmin }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedOrderId, setSelectedOrderId] = useState("");
 
+  const delivredOrders = orders.filter((order) => order.delivered === true);
+  const notDelivredOrders = orders.filter((order) => order.delivered === false);
+
   useEffect(() => {
     const fetchOrders = async () => {
       if (!isAdmin) return;
@@ -76,7 +79,8 @@ const Admin = ({ token, isAdmin }) => {
   return (
     <div>
       {isLoading && <p>Chargement...</p>}
-      {orders.length > 0 ? (
+      <h2>Commandes en cours : </h2>
+      {notDelivredOrders.length > 0 ? (
         <div>
           <select
             value={selectedOrderId}
@@ -85,7 +89,7 @@ const Admin = ({ token, isAdmin }) => {
             <option value="" disabled>
               Sélectionnez une commande
             </option>
-            {orders.map((order) => (
+            {notDelivredOrders.map((order) => (
               <option key={order._id} value={order._id}>
                 {order._id}
               </option>
@@ -100,6 +104,19 @@ const Admin = ({ token, isAdmin }) => {
         </div>
       ) : (
         <p>Pas de commandes en cours !</p>
+      )}
+
+      <h2>Commandes livrées : </h2>
+      {delivredOrders.length > 0 ? (
+        <div>
+          {delivredOrders.map((order) => (
+            <h3 key={order._id} value={order._id}>
+              {order._id}
+            </h3>
+          ))}
+        </div>
+      ) : (
+        <p>Pas de commandes livrées !</p>
       )}
       {error && <p className="text-red-500">{error}</p>}
     </div>
