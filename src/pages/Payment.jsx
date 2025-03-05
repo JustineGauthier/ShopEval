@@ -65,6 +65,7 @@ const Payment = ({ token }) => {
               </div>
             );
           })}
+          <h2>Total : {totalPrice.toFixed(2)}€</h2>
           <form onSubmit={handlePayment}>
             <input type="text" name="address" placeholder="Adresse" required />
             {isLoading ? (

@@ -3,7 +3,7 @@ import { useCartContext } from "../contexts/CartContext";
 import ProductManagement from "../components/ProductManagement";
 
 const Cart = ({ token }) => {
-  const { cart } = useCartContext();
+  const { cart, totalPrice } = useCartContext();
   const navigate = useNavigate();
 
   return token ? (
@@ -26,6 +26,7 @@ const Cart = ({ token }) => {
               </div>
             );
           })}
+          <h2>Total : {totalPrice.toFixed(2)}€</h2>
           <button
             onClick={() => {
               navigate(`/payment`);
