@@ -1,3 +1,4 @@
+import "../styles/header.css";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useCartContext } from "../contexts/CartContext";

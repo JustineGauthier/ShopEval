@@ -1,0 +1,31 @@
+header {
+  background-color: #1f4343;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header div {
+  display: flex;
+  gap: 15px;
+}
+
+header button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+header button:hover {
+  color: #d3d3d3;
+}

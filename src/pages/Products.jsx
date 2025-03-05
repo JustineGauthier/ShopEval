@@ -2,6 +2,7 @@ import useProductsQuery from "../hooks/useProductsQuery";
 import ProductManagement from "../components/ProductManagement";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import "../styles/products.css";
 
 const Products = () => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const Products = () => {
         const id = product._id;
 
         return (
-          <div key={id}>
+          <div className="card" key={id}>
             <div
               onClick={() => {
                 navigate(`/products/${id}`, { state: { id } });
