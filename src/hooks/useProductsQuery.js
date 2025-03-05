@@ -8,7 +8,7 @@ const useProductsQuery = () =>
       const { data } = await axios.get("http://localhost:4000/products");
       return data;
     },
-    staleTime: 1000 * 60 * 2, //mettre à jour toutes les 2 minutes
+    staleTime: 1000 * 60 * 3,
   });
 
 export default useProductsQuery;

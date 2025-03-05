@@ -4,7 +4,10 @@ const CartContext = createContext();
 
 const cartReducer = (state, action) => {
   const { type, payload } = action;
-  const existingItem = state.cart.find((item) => item._id === payload._id);
+  var existingItem = false;
+
+  if (payload)
+    existingItem = state.cart.find((item) => item._id === payload._id);
 
   switch (type) {
     case "add_item":
@@ -59,6 +62,14 @@ const cartReducer = (state, action) => {
         }
       }
       return state;
+
+    case "clear_cart":
+      return {
+        ...state,
+        cart: [],
+        totalItems: 0,
+        totalPrice: 0,
+      };
 
     default:
       return state;
