@@ -27,15 +27,11 @@ const Payment = ({ token }) => {
     };
 
     try {
-      console.log(token);
-
       const response = await axios.post("http://localhost:4000/orders", data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      console.log(response);
 
       if (response.status === 201) {
         dispatch({ type: "clear_cart" });
